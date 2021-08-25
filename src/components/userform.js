@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export function Userform() {
     const [userform, setUserform] = useState({ firstname: "Pariwesh" });
-    const [users, setUsers] = useState([{ firstname: 'ram' }]);
+    const [users, setUsers] = useState([]);
     function getAllUser() {
         if (!users.length)
             axios.get("http://localhost:3000/users")
@@ -37,7 +37,7 @@ export function Userform() {
 
             <button onClick={saveUser}> Save</button>
             {users.map(function (user, index) {
-                return <div>{user.firstname}</div>
+                return <div>{user.firstname}, {user.age}</div>
             })}
         </div>
     );
