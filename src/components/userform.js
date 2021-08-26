@@ -15,9 +15,9 @@ export function Userform() {
     }
     getAllUser();
     const handleEvent = function (event) {
-    console.log(event.target.value);
+        console.log(event.target.value);
         setUserform({
-           ...userform,  [event.target.name]: event.target.value //spread operator
+            ...userform, [event.target.name]: event.target.value //spread operator
         })
     }
     const saveUser = function () {
@@ -30,14 +30,24 @@ export function Userform() {
             });
         console.log('clicked...');
     }
+    function deleteUser(event) {
+        if (!window.confirm("Are you sure?"))
+            return;
+        axios.delete('http://localhost:3000/users/+' + event.target.id)
+        .then(function (response) {
+            getAllUser();
+        })
+    }
     return (//JSX
         <div>userform
             <input value={userform.firstname} name='firstname' onChange={handleEvent}></input>
-            <input value={userform.age}  name='age' onChange={handleEvent}></input>
+            <input value={userform.age} name='age' onChange={handleEvent}></input>
 
             <button onClick={saveUser}> Save</button>
             {users.map(function (user, index) {
-                return <div>{user.firstname}, {user.age}</div>
+                return <div>{user.firstname}, {user.age}
+                    <button id={user.id} onClick={deleteUser} >Delete</button>
+                </div>
             })}
         </div>
     );
