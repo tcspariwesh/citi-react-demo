@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { Counter } from "./Counter";
 
 
 export function Userform() {
@@ -42,6 +43,8 @@ export function Userform() {
         <div>userform
             <input value={userform.firstname} name='firstname' onChange={handleEvent}></input>
             <input value={userform.age} name='age' onChange={handleEvent}></input>
+            <input value={userform.gender} name='gender' onChange={handleEvent} type='radio' value='Female'/>Female
+            <input value={userform.gender} name='gender' onChange={handleEvent} type='radio' value='Male'/>Male
 
             <button onClick={saveUser}> Save</button>
             {users.map(function (user, index) {
@@ -49,6 +52,7 @@ export function Userform() {
                     <button id={user.id} onClick={deleteUser} >Delete</button>
                 </div>
             })}
+            <Counter count={users.length} user={userform}></Counter>
         </div>
     );
 }
