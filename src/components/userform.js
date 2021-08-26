@@ -2,13 +2,13 @@ import axios from "axios";
 import { useState } from "react";
 import { Counter } from "./Counter";
 
-
+const BASE_URL = "http://localhost:3001/users/";
 export function Userform() {
     const [userform, setUserform] = useState({ firstname: "Pariwesh" });
     const [users, setUsers] = useState([]);
     function getAllUser() {
         if (!users.length)
-            axios.get("http://localhost:3000/users")
+            axios.get(BASE_URL)
                 .then(function (response) {
                     console.log(response.data);
                     setUsers(response.data)
@@ -21,8 +21,15 @@ export function Userform() {
             ...userform, [event.target.name]: event.target.value //spread operator
         })
     }
+    function validate(){//returns false if data is invalid
+       return ( userform.firstname ||userform.firstname.trim() !=='')
+    }
     const saveUser = function () {
-        axios.post("http://localhost:3000/users", userform)
+        if(!validate()){
+            alert('input data is wrong');
+            return ;
+        }
+        axios.post(BASE_URL, userform)
             .then(function (response) {
                 console.log(response.data);
             })
@@ -34,7 +41,7 @@ export function Userform() {
     function deleteUser(event) {
         if (!window.confirm("Are you sure?"))
             return;
-        axios.delete('http://localhost:3000/users/+' + event.target.id)
+        axios.delete(BASE_URL + event.target.id)
         .then(function (response) {
             getAllUser();
         })
